@@ -252,44 +252,6 @@ function LandingPage() {
             </div>
           </Marquee>
         </div>
-
-        {/* <div className="RightText1">
-          <div className="text">
-            <div className="title">
-              Focus on design–everything scales automatically
-            </div>
-            <div className="subtitle">
-              Create freely on canvas, including in pixels, with a responsive
-              editor that optimizes designs for every screen size.
-            </div>
-          </div>
-          <img
-            alt="img"
-            src={
-              "https://res.cloudinary.com/diemfyvd7/image/upload/v1727778345/zogndacpcwntatc2upf9.jpg"
-            }
-          />
-        </div> */}
-
-        {/* <div className="LeftText">
-          <img
-            alt="img"
-            src={
-              "https://res.cloudinary.com/diemfyvd7/image/upload/v1727778343/dtzfgl8zv284kkb9wzem.jpg"
-            }
-          />
-          <div className="text">
-            <div className="title">
-              Design in minutes, publish sites in seconds.
-            </div>
-            <div className="subtitle">
-              Turn your ideas into a real website quickly. Select from thousands
-              of free and premium website templates and customize them as you
-              see fit.
-            </div>
-          </div>
-        </div> */}
-
         <div className="RightText2">
           <div className="text">
             <div className="title">Develop and sell your applications</div>
@@ -320,9 +282,7 @@ function LandingPage() {
 
         <div className="Footer">
           <div className="footerright">
-            {/* <img alt="img" src={'https://i.pinimg.com/736x/bd/51/0c/bd510c9c46e3c3a1388776dfb11f5ed9.jpg'}/>
-  <img alt="img" src={'https://i.pinimg.com/1200x/3e/f3/b2/3ef3b280bce4c1209e1e4376c7f452ed.jpg'}/> */}
-            <img
+                  <img
               onClick={() => window.location.href = 'https://www.instagram.com/toggl.hq/'}
               alt="img"
               src={
@@ -347,8 +307,7 @@ function LandingPage() {
           <div className="links">
             <a href="/">Terms of Use</a>
             <a href="/privacy-policy">Privacy Policy</a>
-            {/* <a href="/">© 2006-2024 Toggl.app, Inc</a> */}
-            
+
           </div>
         </div>
     </div>
