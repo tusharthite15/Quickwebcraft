@@ -1,0 +1,153 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
+
+.Projects {
+    font-family: "Inter", sans-serif;
+
+
+    button,
+    input,
+    select {
+        font-family: "Inter", sans-serif;
+    }
+
+    .nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        /* background: linear-gradient(90deg, #ff4d00, #df00ad); */
+        background: #CD2504;
+        padding: 10px 30px;
+        border-bottom: 1px solid #ededed;
+
+        .logo {
+            font-size: 25px;
+            font-weight: 600;
+            color: white;
+        }
+
+        .right {
+
+            .create {
+                font-size: 13px;
+                font-weight: 600;
+                height: 35px;
+                margin-left: 10px;
+                border: none;
+                background: white;
+                color: #FF4D00;
+                border-radius: 5px;
+                cursor: pointer;
+            }
+
+            .create:hover {
+                opacity: 0.85;
+            }
+
+            .profile {
+                width: 40px;
+                height: 40px;
+                min-width: unset;
+                margin-left: 15px;
+                background: white;
+                color: black;
+                font-weight: bold;
+            }
+
+            .profile:hover {
+                opacity: 0.85;
+            }
+
+        }
+    }
+  
+
+    .thumb {
+        height: 160px;
+        margin: 20px auto;
+        border-radius: 20px;
+        margin-bottom: 50px;
+    }
+
+    .container {
+        width: 95%;
+        margin: 20px auto;
+        display: flex;
+        flex-wrap: wrap;
+
+        .box {
+            margin: 10px 20px;
+
+            .canvas {
+                width: 250px;
+                height: 250px;
+                background: url(https://fuzzymath.com/wp-content/uploads/2020/08/What_Makes_Good_UI_Design-940x471.png);
+                background-size: 500px;
+                background-position: center;
+                border-radius: 10px;
+                background-size: cover;
+                background-position-x: right;
+                border: 1px solid #b1b1b1;
+            }
+
+            .canvas:hover {
+                opacity: 0.85;
+            }
+            .canvas:focus {
+                border: 2px solid #006eff;
+            }
+
+            .addproject {
+                width: 250px;
+                height: 250px;
+                background: #e9e9e9;
+                color: black;
+                font-size: 14px;
+                border-radius: 10px;
+                background-size: cover;
+                background-position-x: right;
+                border: 1px solid #b1b1b1;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-wrap: wrap;
+                svg{
+                    width: 100%;
+                    font-size: 40px;
+                    margin-bottom: -120px;
+                }
+            }
+
+            .addproject:hover {
+                opacity: 0.85;
+            }
+            .addproject:focus {
+                border: 2px solid #006eff;
+            }
+
+            .more {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+
+                .name {
+                    font-size: 15px;
+                    margin-top: 10px;
+                    margin-left: 10px;
+                }
+
+                button {
+                    min-width: unset;
+                    margin-top: 10px;
+                    margin-right: 5px;
+                    border-radius: 6px;
+                    background: #f7f7f7;
+                }
+                button:hover {
+                    background: #ededed;
+                }
+            }
+        }
+    }
+
+}

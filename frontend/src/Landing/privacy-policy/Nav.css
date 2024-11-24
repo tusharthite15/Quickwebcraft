@@ -1,0 +1,23 @@
+
+
+    .Nav {
+        height: 65px;
+        background: white;
+        border-bottom: 1px solid #EDEDED;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0px 25px;
+        position: sticky;
+        top: 0;
+        left: 0;
+        z-index: 10;
+        border-radius: 10px;
+
+        .Logo {
+            font-size: 30px;
+            font-weight: 600;
+            color: #041527;
+        }
+
+    }
