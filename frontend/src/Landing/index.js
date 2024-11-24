@@ -35,7 +35,6 @@ function LandingPage() {
             <br />
             in just a <span>second!</span>
           </div>
-          <div className="SubLine">Launch your website just for ₹70/month</div>
           <button onClick={() => (window.location.href = "/signup")}>
             Create your Website
           </button>
