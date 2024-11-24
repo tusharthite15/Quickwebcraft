@@ -347,7 +347,8 @@ function LandingPage() {
           <div className="links">
             <a href="/">Terms of Use</a>
             <a href="/privacy-policy">Privacy Policy</a>
-            <a href="/">© 2006-2024 Toggl.app, Inc</a>
+            {/* <a href="/">© 2006-2024 Toggl.app, Inc</a> */}
+            
           </div>
         </div>
     </div>
