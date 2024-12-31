@@ -1,5 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
 
+
 .Editor {
     font-family: "Inter", sans-serif;
     width: 100%;
@@ -952,4 +953,19 @@
     }
 
     /* Feedback modal title */
+    .templates {
+        padding: 10px;
+        border: 1px solid #ccc;
+      }
+      
+      .btn-close {
+        margin-top: 10px;
+        cursor: pointer;
+        background-color: #f00;
+        color: #fff;
+        padding: 5px 10px;
+        border: none;
+        border-radius: 4px;
+      }
+          
 }

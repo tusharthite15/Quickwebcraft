@@ -37,6 +37,7 @@ exports.addCategory = async (req, res) => {
     return res.status(500).json({ message: 'Server error', error: error.message });
   }
 };
+// update cate
 
 // Controller function to fetch all categories
 exports.getCategories = async (req, res) => {
@@ -141,5 +142,30 @@ exports.getSubcategoriesByCategory = async (req, res) => {
       return res.status(500).json({ message: 'Server error', error: error.message });
     }
   };
+
+  // controllers/Category.js
+
+//   const updateSubcategory = async (req, res) => {
+//     console.log('Received request to update subcategory with id:', req.params.id);
+//     const { id } = req.params;  // Ensure this matches the URL parameter
+//     const { name, description } = req.body;  // Example fields
+  
+//     try {
+//       const subcategory = await Subcategory.findByIdAndUpdate(id, { name, description }, { new: true });
+//       if (!subcategory) {
+//         return res.status(404).json({ message: 'Subcategory not found' });
+//       }
+//       res.status(200).json(subcategory);  // Return the updated subcategory
+//     } catch (error) {
+//       res.status(500).json({ message: 'Error updating subcategory', error });
+//     }
+//   };
+  
+
+// module.exports = {
+//   // other controller functions...
+//   updateSubcategory,
+// };
+
   
   

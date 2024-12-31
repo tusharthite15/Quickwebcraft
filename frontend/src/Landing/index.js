@@ -3,8 +3,6 @@ import { Marquee } from "@devnomic/marquee";
 import "@devnomic/marquee/dist/index.css";
 import React, { useEffect } from "react";
 
-// ... lazy load other components similarly
-
 function LandingPage() {
   const handleRedirect = () => {
     const userId = localStorage.getItem("userid");
@@ -31,7 +29,7 @@ function LandingPage() {
 
         <div className="HeroSection">
           <div className="MainLine">
-            Create a website
+            Build a website
             <br />
             in just a <span>second!</span>
           </div>
@@ -87,7 +85,7 @@ function LandingPage() {
               <div
                 style={{
                   background:
-                    "url('https://cdn.prod.website-files.com/5e593fb060cf877cf875dd1f/66ea453b14154935feb44731_7bd35116-71dd-4d99-9dce-d0e41322004a.jpeg')",
+                    "url('https://res.cloudinary.com/dmwhg18or/image/upload/v1735641472/Screenshot_2024-12-31_160646_ratdei.png')",
                   backgroundSize: "cover",
                 }}
                 className="templates"
@@ -205,7 +203,7 @@ function LandingPage() {
                   <img
                     alt="img"
                     src={
-                      "https://pbs.twimg.com/profile_images/1834996898920312832/VEacRGaD_normal.jpg"
+                      "https://pbs.twimg.com/profile_images/1833232062582546432/mjdlna28_normal.jpg"
                     }
                   />
                   <div className="info">

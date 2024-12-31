@@ -61,14 +61,7 @@ function CustomDomain () {
       tailwindLink.rel = 'stylesheet';
       tailwindLink.href = 'https://cdn.jsdelivr.net/npm/daisyui@2.6.0/dist/full.css';
       iframeHead.appendChild(tailwindLink);
-    });
-
-
-
-
-
-
-    
+    });    
     const fn = (ev) => ev.stopPropagation();
 
     editorRef.current.on('run:core:preview', () => {

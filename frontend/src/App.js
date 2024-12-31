@@ -12,7 +12,7 @@ const ManageBlock = lazy(() => import("./Pages/ManageBlock"));
 const PrivacyPolicy = lazy(() => import("./Landing/privacy-policy"));
 const UpdateBlock = lazy(() => import("./Pages/ManageBlock/UpdateBlock"));
 const ManageCat = lazy(() => import("./Pages/ManageBlock/ManageCat"));
-// const ManageAll = lazy(() => import("./Pages/ManageBlock/ManageAll"));
+const ManageAll = lazy(() => import("./Pages/ManageBlock/ManageAll"));
 const Subdomain = lazy(() => import("./Publish/Subdomain"));
 const CustomDomain = lazy(() => import("./Publish/CustomDomain"));
 
@@ -35,7 +35,6 @@ const getRoutesForDomain = () => {
     ];
   }
 
-  // If the domain is toggl.com or www.toggl.com
   return [{ path: "/", element: <LandingPage /> }];
 };
 
@@ -79,7 +78,7 @@ const getDefaultRoutes = () => [
   },
   {
     path: "/admin/manageall",
-    element: <ManageCat />,
+    element: <ManageAll />,
   },
 ];
 

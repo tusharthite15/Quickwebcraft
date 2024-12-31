@@ -12,10 +12,9 @@ export const TriggerComponentClick = async () => {
             if (Menu !== 'Layer') {
               setMenu('Style');  
             } else {
-              setMenu('Layer');
+              setMenu('Layer'); 
             }
             setSelectedComponent(component);
-            // Add your custom logic here
           });
         }
        

@@ -11,11 +11,14 @@ function ManageAll() {
     selectField3: '',
   });
 
+  const [editingCategory, setEditingCategory] = useState(null);
+  const [editingSubcategory, setEditingSubcategory] = useState(null);
+
   useEffect(() => {
     // Fetch categories when the component mounts
     const fetchCategories = async () => {
       try {
-        const response = await axios.get(process.env.REACT_APP_API_URL+'/getCategories'); // Adjust the URL as needed
+        const response = await axios.get(process.env.REACT_APP_API_URL + '/getCategories');
         setCategories(response.data.categories);
       } catch (error) {
         console.error('Error fetching categories:', error);
@@ -43,25 +46,65 @@ function ManageAll() {
     setSubclassifications(selectedSubcategory ? selectedSubcategory.subclassifications : []);
   };
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
+  const handleCategoryEditChange = (e) => {
+    const updatedCategoryName = e.target.value;
+    setEditingCategory({ ...editingCategory, name: updatedCategoryName });
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    // Here you can make the API call to submit the data
+  const handleSubcategoryEditChange = (e) => {
+    const updatedSubcategoryName = e.target.value;
+    setEditingSubcategory({ ...editingSubcategory, name: updatedSubcategoryName });
   };
+
+  const handleUpdateCategory = async (categoryId) => {
+    try {
+      const updatedCategoryName = editingCategory.name;
+      const updatedSubcategories = categories.find(category => category._id === categoryId).subcategories;
+
+      const response = await axios.put(`${process.env.REACT_APP_API_URL}/updateCategory/${categoryId}`, {
+        name: updatedCategoryName,
+        subcategories: updatedSubcategories,
+      });
+
+      if (response.status === 200) {
+        // Fetch updated categories after a successful update
+        const updatedCategories = await axios.get(process.env.REACT_APP_API_URL + '/getCategories');
+        setCategories(updatedCategories.data.categories);
+        setEditingCategory(null); // Reset editing state
+      }
+    } catch (error) {
+      console.error('Error updating category:', error);
+    }
+  };
+
+  const handleUpdateSubcategory = async (subcategoryId) => {
+    try {
+      const updatedSubcategoryName = editingSubcategory.name;
+  
+      // Log subcategoryId to check if it's correct
+      console.log('Updating subcategory with ID:', subcategoryId);
+  
+      const response = await axios.put(`${process.env.REACT_APP_API_URL}/updateSubcategory/${subcategoryId}`, {
+        name: updatedSubcategoryName,
+      });
+  
+      if (response.status === 200) {
+        const selectedCategory = categories.find(category => category._id === formData.selectField1);
+        setSubcategories(selectedCategory ? selectedCategory.subcategories : []);
+        setEditingSubcategory(null); // Close the editing state
+      }
+    } catch (error) {
+      console.error('Error updating subcategory:', error);
+    }
+  };
+  
 
   return (
     <div className="flex items-center justify-center h-screen">
       <div className="bg-white shadow-md rounded-lg p-8 max-w-md w-full">
         <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center">Manage Classification</h2>
 
-        <form onSubmit={handleSubmit}>
+        <form>
           {/* Select Field 1 (Categories) */}
           <div className="mb-4">
             <label htmlFor="selectField1" className="block text-gray-700 font-medium mb-2">Select Category</label>
@@ -78,6 +121,36 @@ function ManageAll() {
               ))}
             </select>
           </div>
+
+          {/* Category Edit */}
+          {editingCategory && editingCategory.id === formData.selectField1 ? (
+            <div className="mb-4">
+              <input
+                type="text"
+                value={editingCategory.name}
+                onChange={handleCategoryEditChange}
+                className="w-full px-4 py-2 border rounded-md text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+              <button
+                type="button"
+                onClick={() => handleUpdateCategory(formData.selectField1)}
+                className="bg-green-500 text-white px-4 py-2 rounded-md mt-2"
+              >
+                Save
+              </button>
+            </div>
+          ) : (
+            <div className="flex justify-between mb-4">
+              <span>{categories.find(c => c._id === formData.selectField1)?.name}</span>
+              <button
+                type="button"
+                onClick={() => setEditingCategory({ id: formData.selectField1, name: categories.find(c => c._id === formData.selectField1)?.name })}
+                className="text-blue-500"
+              >
+                Edit
+              </button>
+            </div>
+          )}
 
           {/* Select Field 2 (Subcategories) */}
           <div className="mb-4">
@@ -97,6 +170,36 @@ function ManageAll() {
             </select>
           </div>
 
+          {/* Subcategory Edit */}
+          {editingSubcategory && editingSubcategory.id === formData.selectField2 ? (
+            <div className="mb-4">
+              <input
+                type="text"
+                value={editingSubcategory.name}
+                onChange={handleSubcategoryEditChange}
+                className="w-full px-4 py-2 border rounded-md text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+              <button
+                type="button"
+                onClick={() => handleUpdateSubcategory(formData.selectField2)}
+                className="bg-green-500 text-white px-4 py-2 rounded-md mt-2"
+              >
+                Save
+              </button>
+            </div>
+          ) : (
+            <div className="flex justify-between mb-4">
+              <span>{subcategories.find(s => s._id === formData.selectField2)?.name}</span>
+              <button
+                type="button"
+                onClick={() => setEditingSubcategory({ id: formData.selectField2, name: subcategories.find(s => s._id === formData.selectField2)?.name })}
+                className="text-blue-500"
+              >
+                Edit
+              </button>
+            </div>
+          )}
+
           {/* Select Field 3 (Subclassifications) */}
           <div className="mb-4">
             <label htmlFor="selectField3" className="block text-gray-700 font-medium mb-2">Select Subclassification</label>
@@ -105,7 +208,7 @@ function ManageAll() {
               name="selectField3"
               className="w-full px-4 py-2 border rounded-md text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
               value={formData.selectField3}
-              onChange={handleChange}
+              onChange={(e) => setFormData({ ...formData, selectField3: e.target.value })}
               disabled={!subclassifications.length} // Disable if no subclassifications
             >
               <option value="" disabled>Select a subclassification</option>

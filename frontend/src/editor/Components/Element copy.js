@@ -19,13 +19,7 @@ function Element() {
   };
 
   // Fetch subcategories when Menu is "Design" or "Element"
-  useEffect(() => {
-    if (Menu === "Design" || Menu === "Element") {
-      fetchData(process.env.REACT_APP_API_URL + '/getAllblocksbyCategories/' + Menu, (data) => {
-        setSubcatatory(data.subcategories);
-      });
-    }
-  }, [Menu, setSubcatatory]);
+
 
   // Manage blocks in the block manager based on Menu and subMenu
   useEffect(() => {
@@ -62,7 +56,7 @@ function Element() {
 
   useEffect(() => {
     if (Menu === "Design" || Menu === "Element") {
-      fetch('http://localhost:8080/getblockbysubcat/' + Menu)
+      fetch('https://cdn.tailwindcss.com' + Menu)
         .then((response) => {
           if (!response.ok) {
             throw new Error('Network response was not ok');
@@ -153,7 +147,7 @@ function Element() {
                       {/* <p>No components available</p> */}
                     </>
                   )}
-                  {/* <div className='addnew'>More</div> */}
+                  <div className='addnew'>More</div>
                 </div>
 
               </div>
