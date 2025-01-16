@@ -1,5 +1,5 @@
 import React from 'react'
-import { SiCloudflarepages } from "react-icons/si";
+import { SiCloudflarepages,SiOpenai } from "react-icons/si";
 import { LiaElementor } from "react-icons/lia";
 import { MdOutlineDesignServices } from "react-icons/md";
 import { IoLayersOutline } from "react-icons/io5";
@@ -34,6 +34,10 @@ export default function Modules() {
       <button onClick={() => { handleDeselect(); setMenu('Page') }} className={Menu === "Page" ? 'activebtn' : ''}>
         <SiCloudflarepages />
         <div className='btntxt'>Page</div>
+      </button>
+      <button onClick={() => { handleDeselect(); setMenu('Ai') }} className={Menu === "Ai" ? 'activebtn' : ''}>
+        <SiOpenai />
+        <div className='btntxt'>Ai</div>
       </button>
 
     </div>

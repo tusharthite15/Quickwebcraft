@@ -12,26 +12,112 @@ import { IoMdAdd } from "react-icons/io";
 
 // Reusable Project Modal Component
 const ProjectModal = ({ isOpen, onClose, title, nameRef, onSave, defaultValue, func }) => (
-<Modal isOpen={isOpen}onPress={onClose} placement="top-center" class="modal" style={{ backgroundColor: '#e9e9e9' }}>
-<ModalContent>
+  <Modal 
+    isOpen={isOpen}
+    onPress={onClose}
+    placement="top-center"
+    style={{
+      backgroundColor: '#e9e9e9',
+      display: isOpen ? 'flex' : 'none',
+      justifyContent: 'center',
+      alignItems: 'center',
+      position: 'fixed',
+      top: 0,
+      left: 0,
+      width: '100%',
+      height: '100%',
+      zIndex: 50,
+    }}
+  >
+    <ModalContent
+      style={{
+        backgroundColor: 'white',
+        borderRadius: '0.5rem',
+        boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+        padding: '1.5rem',
+        width: '90%',
+        maxWidth: '500px',
+      }}
+      // onPress={onClose}
+    >
       {() => (
         <>
-          <ModalHeader className="flex flex-col gap-1">{title}</ModalHeader>
+          <ModalHeader
+            style={{
+              fontSize: '1.25rem',
+              fontWeight: '600',
+              color: '#1f2937',
+              marginBottom: '1rem',
+            }}
+          >
+            {title}
+          </ModalHeader>
           <ModalBody>
             <Input
               ref={nameRef}
               defaultValue={defaultValue}
               autoFocus
-              label="Project name"
-              // placeholder="Enter your project name"
+              placeholder="Enter your project name"
               variant="bordered"
+              style={{
+                width: '100%',
+                padding: '0.5rem',
+                border: '1px solid #d1d5db',
+                borderRadius: '0.375rem',
+                outline: 'none',
+                fontSize: '1rem',
+                color: '#374151',
+                marginBottom: '1rem',
+              }}
             />
           </ModalBody>
-          <ModalFooter>
-            <Button color="danger" variant="flat" onPress={onClose}>
+          <ModalFooter
+            style={{
+              display: 'flex',
+              justifyContent: 'flex-end',
+              gap: '0.5rem',
+            }}
+          >
+            <Button
+              color="danger"
+              variant="flat"
+              onPress={onClose}
+              style={{
+                padding: '0.5rem 1rem',
+                fontSize: '0.875rem',
+                fontWeight: '500',
+                border: '1px solid #ddd',
+                borderRadius: '0.375rem',
+                // backgroundColor: 'transparent',
+                color: '#000',
+                // transition: 'background-color 0.2s',
+              }}
+
+            >
               Close
             </Button>
-            <Button color="primary" onPress={() => { onSave(); func(); }}>
+            <Button
+              color="primary"
+              onPress={() => {
+                onSave();
+                func();
+              }}
+              style={{
+                padding: '0.5rem 1rem',
+                fontSize: '0.875rem',
+                fontWeight: '500',
+                borderRadius: '0.375rem',
+                backgroundColor: '#3b82f6',
+                color: 'white',
+                transition: 'background-color 0.2s',
+              }}
+              onMouseOver={(e) =>
+                (e.target.style.backgroundColor = '#2563eb')
+              }
+              onMouseOut={(e) =>
+                (e.target.style.backgroundColor = '#3b82f6')
+              }
+            >
               Save
             </Button>
           </ModalFooter>
@@ -40,6 +126,7 @@ const ProjectModal = ({ isOpen, onClose, title, nameRef, onSave, defaultValue, f
     </ModalContent>
   </Modal>
 );
+
 
 function Projects() {
   const { userid } = useParams();

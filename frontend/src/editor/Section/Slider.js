@@ -4,21 +4,18 @@ import Element from '../Components/Element';
 import Layer from '../Components/Layer';
 import Page from '../Components/Page';
 import Style from '../Components/Style';
+import Ai from '../Ai/AI';
 
 export default function Slider() {
-  const { Menu,subMenu, setSubMenu, GJinitRef, blocks,subcatatory } = useToggle();
+  const { Menu, subMenu, setSubMenu, GJinitRef, blocks, subcatatory } = useToggle();
   const [uniqueCategories, setUniqueCategories] = useState([]);
-
 
   const handleDeselect = () => {
     if (GJinitRef.current) {
       const editor = GJinitRef.current;
       editor.select(null);
-
-
     }
   };
-
 
   useEffect(() => {
     const uniqueCategories = [
@@ -26,48 +23,23 @@ export default function Slider() {
         blocks
           .filter((page) => page.category === Menu) // Filter by the category
           .map((page) => page.subcategory) // Get the subcategory
-      )
+      ),
     ];
 
-    setUniqueCategories(uniqueCategories)
-  }, [blocks, Menu])
+    setUniqueCategories(uniqueCategories);
+  }, [blocks, Menu]);
 
-
-  useEffect(() => {
-
-    const blockCategories = document.getElementsByClassName('gjs-block-category gjs-open');
-    console.log(blockCategories);
-        
-    if (blockCategories) {
-      // Loop through HTMLCollection using a for loop
-      for (let i = 0; i < blockCategories.length; i++) {
-        const category = blockCategories[i];
-    
-        // Find the child element with class "gjs-blocks-c"
-        const childBlock = category.querySelector('.gjs-blocks-c').lastChild;
-      
-        // Check if the child element exists and whether it's empty or not
-        
-          if (childBlock === null) {
-            // If empty, set display to 'none'
-            category.style.display = 'none';
-          } else {
-            // If not empty, set display to 'block'
-            category.style.display = 'block';
-          }
-      }
-    }
-    
-
-
-  },[Menu,subMenu])
+  const handleSubcategoryClick = (category) => {
+    handleDeselect();
+    setSubMenu(category);
+  };
 
   return (
-    <div className='Slider'>
-
-
-
-      <div style={{ display: Menu === ("Layer") || Menu === ("Page") || Menu === ("Style") ? 'none' : 'block' }} className='search'>
+    <div className="Slider">
+      <div
+        style={{ display: Menu === 'Layer' || Menu === 'Ai' || Menu === 'Page' || Menu === 'Style' ? 'none' : 'block' }}
+        className="search"
+      >
         <div className="search-input-container">
           <input type="Search" placeholder="Search..." />
           <span className="search-icon">
@@ -90,33 +62,48 @@ export default function Slider() {
       </div>
 
       <div>
-      <div className='overflow-auto'>
-        <div style={{ display: Menu === ("Design") ? 'flex' : 'none' }} className='tabs'>
-          <button onClick={() => { handleDeselect(); setSubMenu('All') }}>All</button>
-          {subcatatory.map((category) => (
-            <button key={category} onClick={() => { handleDeselect(); setSubMenu(category) }}>{category}</button>
+        <div className="overflow-auto">
+          <div style={{ display: Menu === 'Design' ? 'flex' : 'none' }} className="tabs">
+            <button onClick={() => handleSubcategoryClick('All')}>All</button>
+            {subcatatory.map((category) => (
+              <button
+                key={category}
+                className={subMenu === category ? 'active-tab' : ''}
+                onClick={() => handleSubcategoryClick(category)}
+              >
+                {category}
+              </button>
+            ))}
+          </div>
 
-          ))}
+          <div style={{ display: Menu === 'Element' ? 'flex' : 'none' }} className="tabs">
+            <button onClick={() => handleSubcategoryClick('All')}>All</button>
+            {subcatatory.map((category) => (
+              <button
+                key={category}
+                className={subMenu === category ? 'active-tab' : ''}
+                onClick={() => handleSubcategoryClick(category)}
+              >
+                {category}
+              </button>
+            ))}
+          </div>
         </div>
-        
-        <div style={{ display: Menu === ("Element") ? 'flex' : 'none' }} className='tabs'>
-          <button onClick={() => { handleDeselect(); setSubMenu('All') }}>All</button>
-          {subcatatory.map((category) => (
-            <button key={category} onClick={() => { handleDeselect(); setSubMenu(category) }}>{category}</button>
 
-          ))} </div>
-        </div>
-
-        <Element />
+        {/* Pass `subMenu` to `Element` to render specific designs */}
+        <Element subMenu={subMenu} />
       </div>
-      <div style={{ display: Menu === "Layer" ? 'block' : 'none' }}>
+      <div style={{ display: Menu === 'Layer' ? 'block' : 'none' }}>
         <Layer />
       </div>
-      <div style={{ display: Menu === "Page" ? 'block' : 'none' }}>
+      <div style={{ display: Menu === 'Page' ? 'block' : 'none' }}>
         <Page />
       </div>
-      <div style={{ display: Menu === "Style" ? 'block' : 'none' }}>
+      <div style={{ display: Menu === 'Style' ? 'block' : 'none' }}>
         <Style />
+      </div>
+      <div style={{ display: Menu === 'Ai' ? 'block' : 'none' }}>
+        <Ai />
       </div>
     </div>
   );

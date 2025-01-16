@@ -5,8 +5,6 @@ import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ConfirmationModal from './ConfirmationModal';
-
-
 export default function ManageBlock() {
   const [label, setLabel] = useState("");
   const [library, setLibrary] = useState("");
@@ -374,7 +372,7 @@ export default function ManageBlock() {
 </span>
 
 
-      <div className="mb-2" dangerouslySetInnerHTML={{ __html: block.media}} />
+      <div className="mb-2" dangerouslySetInnerHTML={{ __html: block.content }} />
 
       <button
         onClick={(e) => {

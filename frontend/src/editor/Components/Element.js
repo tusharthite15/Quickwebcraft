@@ -8,7 +8,7 @@ function Element() {
   const [data, setData] = useState(null);
   const [nocatData, setNoCatData] = useState([]);
 
-  // Helper function to fetch data from API
+  // Helper function to fetch data from an API
   const fetchData = async (url, callback) => {
     try {
       const result = await axios.get(url);
@@ -18,163 +18,129 @@ function Element() {
     }
   };
 
-  // Fetch subcategories when Menu is "Design" or "Element"
+  // Fetch subcategories for Menu
   useEffect(() => {
-    if (Menu === "Design" || Menu === "Element") {
-      fetchData(process.env.REACT_APP_API_URL + '/getAllblocksbyCategories/' + Menu, (data) => {
+    if (Menu === 'Design' || Menu === 'Element') {
+      fetchData(`${process.env.REACT_APP_API_URL}/getAllblocksbyCategories/${Menu}`, (data) => {
         setSubcatatory(data.subcategories);
       });
     }
   }, [Menu, setSubcatatory]);
 
-  // Manage blocks in the block manager based on Menu and subMenu
+  // Update blocks in GrapesJS block manager based on Menu and subMenu
   useEffect(() => {
     if (GJinitRef.current) {
       const blockManager = GJinitRef.current.Blocks;
 
       // Remove existing blocks
-      if (blocks.length !== 0) {
-        blocks.forEach((block) => blockManager.remove(block.id));
+      blocks.forEach((block) => blockManager.remove(block.id));
 
-        // Add new blocks based on category and subcategory
-        blocks.forEach((block) => {
-          if (block.category === Menu && (subMenu === "All" || subMenu === block.subcategory)) {
-            blockManager.add(block.id, {
-              label: block.label,
-              content: block.content,
-              media: block.media,
-              category: subMenu === "All" ? block.subcategory : block.type
-            });
-          }
-        });
-      }
+      // Add new blocks based on category and subcategory
+      blocks.forEach((block) => {
+        if (block.category === Menu && (subMenu === 'All' || subMenu === block.subcategory)) {
+          blockManager.add(block.id, {
+            label: block.label,
+            content: block.content,
+            media: block.media,
+            category: subMenu === 'All' ? block.subcategory : block.type,
+          });
+        }
+      });
     }
   }, [Menu, GJinitRef, blocks, subMenu]);
 
-  // Deselect all blocks in the editor
+  // Fetch block data when the Menu changes
+  useEffect(() => {
+    if (Menu === 'Design' || Menu === 'Element') {
+      fetchData(`http://localhost:8080/getblockbysubcat/${Menu}`, setData);
+    }
+  }, [Menu]);
+
+  // Fetch blocks based on subcategories
+  useEffect(() => {
+    if (Menu === 'Design' || Menu === 'Element') {
+      fetchData(`http://localhost:8080/getblocksbysubCategories/${Menu}/${subMenu}`, setNoCatData);
+    }
+  }, [subMenu]);
+
+  // Add component to GrapesJS editor
+  const add = (event, html) => {
+    const editor = GJinitRef.current;
+    if (editor) {
+      editor.addComponents(html || event.target.innerHTML);
+    }
+  };
+
+  // Component for rendering HTML
+  const RenderHTML = ({ htmlContent, html }) => (
+    <div
+      onDragEnd={(event) => add(event, html)}
+      className="draggable"
+      draggable={true}
+      dangerouslySetInnerHTML={{ __html: htmlContent }}
+    />
+  );
+
+  // Handle deselection of blocks
   const handleDeselect = () => {
     if (GJinitRef.current) {
       GJinitRef.current.select(null);
     }
   };
 
-
-
-  useEffect(() => {
-    if (Menu === "Design" || Menu === "Element") {
-      fetch('http://localhost:8080/getblockbysubcat/' + Menu)
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error('Network response was not ok');
-          }
-          return response.json();
-        })
-        .then((data) => {
-          setData(data); // Set the fetched data
-          // setLoading(false); // Turn off the loading state
-        })
-        .catch((error) => {
-          // setError(error); // Handle any errors
-          // setLoading(false); // Turn off the loading state
-        });
-    }
-  }, [Menu]);
-
-  useEffect(() => {
-    if (Menu === "Design" || Menu === "Element") {
-      fetch('http://localhost:8080/getblocksbysubCategories/' + Menu + '/' + subMenu)
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error('Network response was not ok');
-          }
-          return response.json();
-        })
-        .then((data) => {
-          setNoCatData(data); // Set the fetched data
-          // setLoading(false); // Turn off the loading state
-        })
-        .catch((error) => {
-          // setError(error); // Handle any errors
-          // setLoading(false); // Turn off the loading state
-        });
-    }
-  }, [subMenu]);
-
-  const add = (thiss,html) => {
-    console.log(html);
-    if(html===null){
-
-      GJinitRef.current.addComponents(
-        `${thiss.target.innerHTML}`
-      );
-    }else{
-      
-      GJinitRef.current.addComponents(
-        `${html}`
-      );
-    }
-
-  }
-  const RenderHTML = ({ htmlContent,html }) => {
-    return <div onDragEnd={(event) => add(event,html)} className="draggable" draggable={true} dangerouslySetInnerHTML={{ __html: htmlContent }} />;
-  };
-
   return (
     <div className="Element">
-      {(Menu === "Design" || Menu === "Element") && subMenu === "All" ? (
-        <div className='subcata'>
-
-
+      {(Menu === 'Design' || Menu === 'Element') && subMenu === 'All' && (
+        <div className="subcata">
           {data?.subcategories.map((subcategory, index) => (
             <div key={index}>
-
-              <div className='topbar'>
-                <div className='name'>{subcategory.subcategory}</div>
+              <div className="topbar">
+                <div className="name">{subcategory.subcategory}</div>
                 <div
                   onClick={() => {
                     handleDeselect();
                     setSubMenu(subcategory.subcategory);
                   }}
-                  className='btn'
+                  className="btn"
                 >
                   See all
                 </div>
               </div>
-
-              <div className='overflow-auto'>
-                <div className='cards'>
-                  {subcategory.components.length > 0 ? (
-                    subcategory.components.map((component) => (
-                      <>               {component.media === 'null' ? <div key={component.id} className="card"> <RenderHTML html={null} htmlContent={component.content} />   </div> : <div key={component.id} className="card-img">  <RenderHTML htmlContent={component.media} html={component.content} />   </div>}
-                      </>
-                    ))
-                  ) : (
-                    <>
-                      {/* <p>No components available</p> */}
-                    </>
-                  )}
-                  {/* <div className='addnew'>More</div> */}
+              <div className="overflow-auto">
+                <div className="cards">
+                  {subcategory.components.length > 0
+                    ? subcategory.components.map((component) => (
+                        <React.Fragment key={component.id}>
+                          {component.media === 'null' ? (
+                            <div className="card">
+                              <RenderHTML html={null} htmlContent={component.content} />
+                            </div>
+                          ) : (
+                            <div className="card-img">
+                              <RenderHTML htmlContent={component.media} html={component.content} />
+                            </div>
+                          )}
+                        </React.Fragment>
+                      ))
+                    : null}
                 </div>
-
               </div>
             </div>
           ))}
-
-
         </div>
-      ) : null}
+      )}
 
-      {(Menu === "Design" || Menu === "Element") && subMenu === "All" ? (
-        <div className='nocata'>
-          <div className='cards'>
+      {(Menu === 'Design' || Menu === 'Element') && subMenu === 'All' && (
+        <div className="nocata">
+          <div className="cards">
             {nocatData.map((block, index) => (
-              <div key={index} className='card'><RenderHTML htmlContent={block.content} /> </div>
+              <div key={index} className="card">
+                <RenderHTML htmlContent={block.content} />
+              </div>
             ))}
           </div>
         </div>
-      ) : null}
-
-
+      )}
     </div>
   );
 }
